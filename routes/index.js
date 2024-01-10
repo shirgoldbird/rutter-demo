@@ -1,14 +1,16 @@
-var express = require('express');
-var router = express.Router();
-const fetch = (...args) => import('node-fetch').then(({ default: fetch }) => fetch(...args));
-var { getAccounts } = require("../rutter/Accounts.js");
+let express = require('express');
+let router = express.Router();
+let { getAccounts } = require("../rutter/Accounts.js");
+let { getVendors } = require("../rutter/Vendors.js");
 
 /* GET home page. */
 router.get('/', async (req, res, next) => {
-    const data = await getAccounts();
+    const accountData = await getAccounts();
+    const vendorData = await getVendors();
 
     res.render('index', { 
-      data: data.accounts
+      accounts: accountData.accounts,
+      vendors: vendorData.vendors
     });
 });
 

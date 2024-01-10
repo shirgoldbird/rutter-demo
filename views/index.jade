@@ -2,7 +2,12 @@ extends layout
 
 block content
   h1 Home
-  h2 List of accounts
+  h2 Accounts
   ul
-  each account in data
+  each account in accounts
     li #{account.name}
+
+  h2 Vendors
+  ul
+  each vendor in vendors
+    li #{vendor.vendor_name}
