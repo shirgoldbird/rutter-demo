@@ -22,9 +22,9 @@ module.exports = {
             let result = await response.json();
 
             if (!result.next_cursor) {
-                return result.accounts
+                return result
             } else {
-                result.accounts.push(...await module.exports.getAccounts(result.next_cursor))
+                result.accounts.push(...(await module.exports.getAccounts(result.next_cursor)).accounts)
                 return result
             }    
         } else {
