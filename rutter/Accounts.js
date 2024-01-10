@@ -1,18 +1,34 @@
-module.exports = function () {
-    var authString = Buffer.from(`${process.env.RUTTER_CLIENT_ID}:${process.env.RUTTER_CLIENT_SECRET}`).toString('base64');
+module.exports = {
+    getAccounts: async function(cursor) {
+        let authString = Buffer.from(`${process.env.RUTTER_CLIENT_ID}:${process.env.RUTTER_CLIENT_SECRET}`).toString('base64');
 
-    var myHeaders = new Headers();
-    myHeaders.append("x-rutter-version", process.env.RUTTER_API_VERSION);
-    myHeaders.append("Authorization", `Basic ${authString}`);
+        let headers = new Headers({
+            'x-rutter-version': process.env.RUTTER_API_VERSION,
+            'Authorization': `Basic ${authString}`
+        });
 
-    var requestOptions = {
-        method: 'GET',
-        headers: myHeaders,
-        redirect: 'follow'
-    };
+        let requestOptions = {
+            method: 'GET',
+            headers: headers,
+            redirect: 'follow'
+        };
 
-    return fetch(`https://sandbox.rutterapi.com/versioned/accounting/accounts?access_token=${process.env.RUTTER_QUICKBOOKS_ACCESS_TOKEN}`, requestOptions)
-        .then(response => response.json())
-        .then(result => result)
-        .catch(error => console.log('error', error));
+        url = `https://sandbox.rutterapi.com/versioned/accounting/accounts?access_token=${process.env.RUTTER_QUICKBOOKS_ACCESS_TOKEN}`;
+
+        if (cursor) url += `&cursor=${cursor}`;
+
+        let response = await fetch(url, requestOptions);
+        if (response.ok) {
+            let result = await response.json();
+
+            if (!result.next_cursor) {
+                return result.accounts
+            } else {
+                result.accounts.push(...await module.exports.getAccounts(result.next_cursor))
+                return result
+            }    
+        } else {
+            return Promise.reject(response);
+        }
+    }
 }
