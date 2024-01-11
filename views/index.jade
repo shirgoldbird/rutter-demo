@@ -2,6 +2,8 @@ extends layout
 
 block content
   h1 Home
+  button(onclick='billPage()') Add new bill
+
   h2 Accounts
   ul
   each account in accounts
@@ -11,3 +13,8 @@ block content
   ul
   each vendor in vendors
     li #{vendor.vendor_name}
+
+  script.
+    function billPage() {
+      window.location.href = '/add_bill'
+    }
