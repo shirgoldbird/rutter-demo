@@ -24,7 +24,7 @@ module.exports = {
             if (!result.next_cursor) {
                 return result
             } else {
-                result.vendors.push(...await module.exports.getVendors(result.next_cursor).vendors)
+                result.vendors.push(...(await module.exports.getVendors(result.next_cursor)).vendors)
                 console.log(result.keys())
                 return result
             }    
