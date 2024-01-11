@@ -18,17 +18,16 @@ module.exports = {
         if (cursor) url += `&cursor=${cursor}`;
 
         let response = await fetch(url, requestOptions);
-        if (response.ok) {
-            let result = await response.json();
+        
+        if (!response.ok) { return Promise.reject(response); }
 
-            if (!result.next_cursor) {
-                return result
-            } else {
-                result.accounts.push(...(await module.exports.getAccounts(result.next_cursor)).accounts)
-                return result
-            }    
+        let result = await response.json();
+
+        if (!result.next_cursor) {
+            return result
         } else {
-            return Promise.reject(response);
+            result.accounts.push(...(await module.exports.getAccounts(result.next_cursor)).accounts)
+            return result
         }
     }
 }

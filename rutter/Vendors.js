@@ -18,18 +18,17 @@ module.exports = {
         if (cursor) url += `&cursor=${cursor}`;
 
         let response = await fetch(url, requestOptions);
-        if (response.ok) {
-            let result = await response.json();
 
-            if (!result.next_cursor) {
-                return result
-            } else {
-                result.vendors.push(...(await module.exports.getVendors(result.next_cursor)).vendors)
-                console.log(result.keys())
-                return result
-            }    
+        if (!response.ok) { return Promise.reject(response); }
+        
+        let result = await response.json();
+
+        if (!result.next_cursor) {
+            return result
         } else {
-            return Promise.reject(response);
+            result.vendors.push(...(await module.exports.getVendors(result.next_cursor)).vendors)
+            console.log(result.keys())
+            return result
         }
     }
 }
