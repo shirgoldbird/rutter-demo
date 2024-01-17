@@ -1,6 +1,11 @@
 body {
   padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  font-family: "Comic Sans MS", "Comic Sans", cursive;
+  font-size: 14px;
+}
+
+option {
+  font-family: "Comic Sans MS", "Comic Sans", cursive;
 }
 
 a {
