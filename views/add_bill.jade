@@ -1,12 +1,11 @@
 extends layout
 
 block content
-  h1 Home
+  h1 Add Bill
 
   form(action="#") 
     div
       label(for="Vendor") Vendor
-      button(onclick='vendorPage()') Add new vendor
       br
       select(name="Vendor")
         each vendor in vendors
