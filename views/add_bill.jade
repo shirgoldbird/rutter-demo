@@ -3,26 +3,33 @@ extends layout
 block content
   h1 Add Bill
 
-  form(action="#") 
+  form(action='#') 
     div
-      label(for="Vendor") Vendor
+      label(for='Vendor') Vendor
       br
-      select(name="Vendor")
+      select(name='Vendor')
         each vendor in vendors
           option #{vendor.vendor_name}
     div
-      label(for="Invoice Number") Invoice Number
+      label(for='Invoice Number') Invoice Number
       br
-      input(type="text", name="Invoice Number")
+      input(type='text', name='Invoice Number')
     div
-      label(for="Invoice Date") Invoice Date
+      label(for='Invoice Date') Invoice Date
       br
-      input(type="date", name="Invoice Date")
+      input(type='date', name='Invoice Date')
     div
-      label(for="Bill Due Date") Bill Due Date
+      label(for='Bill Due Date') Bill Due Date
       br
-      input(type="date", name="Bill Due Date")
+      input(type='date', name='Bill Due Date')
     div
-      label(for="Description") Description (optional)
+      label(for='Description') Description (optional)
       br
-      textarea(name="Description")
+      textarea(name='Description')
+    div
+      input(type='submit' value='Submit' onclick='onSubmit()')
+
+  script.
+    function onSubmit() {
+      window.location.href = '/'
+    }
