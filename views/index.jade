@@ -4,7 +4,11 @@ block content
   h1 Home
   button(onclick='billPage()') Add new bill
 
-  h2 Accounts
+  h2 Accounts Payable
+  ul
+    li Current Balance: #{accountsPayableAccount.current_balance} #{accountsPayableAccount.currency_code}
+  
+  h2 All Accounts
   ul
   each account in accounts
     li #{account.name}
