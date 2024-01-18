@@ -3,33 +3,35 @@ extends layout
 block content
   h1 Add Bill
 
-  form(action='#') 
+  form(action='/add_bill',method='post')
     div
       label(for='Vendor') Vendor
       br
       select(name='Vendor')
         each vendor in vendors
-          option #{vendor.vendor_name}
+          option(value='#{vendor.platform_id}') #{vendor.vendor_name}
     div
       label(for='Invoice Number') Invoice Number
       br
-      input(type='text', name='Invoice Number')
+      input(type='text', name='Invoice Number' required)
     div
       label(for='Invoice Date') Invoice Date
       br
-      input(type='date', name='Invoice Date')
+      input(type='date', name='Invoice Date' required)
     div
       label(for='Bill Due Date') Bill Due Date
       br
-      input(type='date', name='Bill Due Date')
+      input(type='date', name='Bill Due Date' required)
     div
       label(for='Description') Description (optional)
       br
       textarea(name='Description')
     div
-      input(type='submit' value='Submit' onclick='onSubmit()')
+      label(for='Item') Item
+      br
+      select(name='Item')
+        each item in items
+          option(value='#{item.platform_id}') #{item.name} - $#{item.bill_item.unit_price}
 
-  script.
-    function onSubmit() {
-      window.location.href = '/'
-    }
+    div
+      input(type='submit' value='Sync to QuickBooks')
