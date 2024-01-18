@@ -31,7 +31,15 @@ block content
       br
       select(name='Item')
         each item in items
-          option(value='#{item.platform_id}') #{item.name} - $#{item.bill_item.unit_price}
+          option(value='#{item.platform_id}') #{item.name} - $#{item.bill_item.unit_price}        
+    div
+      label(for='Quantity') Quantity
+      br
+      select(name='Quantity')
+        - var n = 1
+          while n <= 10
+            option #{n++}
+        
 
     div
       input(type='submit' value='Sync to QuickBooks')
